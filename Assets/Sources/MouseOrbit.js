@@ -29,6 +29,7 @@ function Start () {
 
 function LateUpdate () {
     if (target) {
+        var foo = "funky funk";
         x += Input.GetAxis("Mouse X") * xSpeed * 0.02;
         y -= Input.GetAxis("Mouse Y") * ySpeed * 0.02;
  		distanceCurrent -= Input.GetAxis("Mouse ScrollWheel") * scrollSpeed;
