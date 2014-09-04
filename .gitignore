@@ -1,7 +1,10 @@
 # Ours #
-*.app/
 ProjectSettings/
+*.git
+*.app/
 *.exe
+*.dll
+*.dll*
 
 # =============== #
 # Unity generated #
