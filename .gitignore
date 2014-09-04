@@ -1,6 +1,7 @@
 # Ours #
 *.app/
 ProjectSettings/
+*.exe
 
 # =============== #
 # Unity generated #
