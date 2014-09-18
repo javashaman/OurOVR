@@ -1,4 +1,4 @@
-﻿#pragma strict
+#pragma strict
 
 public var moveSpeed : float = 10f;
 
@@ -17,5 +17,7 @@ function Update () {
 
 	if(Input.GetKey(KeyCode.RightArrow))
 		transform.Translate(-Vector3.left * moveSpeed * Time.deltaTime);	
+
+	
 
 }
