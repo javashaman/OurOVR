@@ -1,4 +1,4 @@
-﻿		using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using Leap;
 
@@ -43,7 +43,7 @@ public class HandControllerController : MonoBehaviour {
 
 
 			CharacterController characterController = GetComponent<CharacterController>();
-			Debug.Log("characterController.isGrounded: " + characterController.isGrounded);
+			Debug.Log("characterController.isGrounded: " + characterController.isGrounded  );
 			if (characterController.isGrounded) {
 				moveDirection = new Vector3(moveX, 0, moveZ);
 				moveDirection = transform.TransformDirection(moveDirection);
@@ -54,7 +54,7 @@ public class HandControllerController : MonoBehaviour {
 				
 			}
 			//moveDirection.y -= gravity * Time.deltaTime;
-			characterController.Move(moveDirection * Time.deltaTime);
+			//characterController.Move(moveDirection * Time.deltaTime);
 
 
 		}
