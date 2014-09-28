@@ -5,58 +5,72 @@ using Leap;
 public class HandControllerController : MonoBehaviour {
 	Controller controller;
 
-	public float speed = 0.0001F;
-	public float gravity = 20.0F;
+	public float speed = 200.0f;
+	public float gravity = 20.0f;
 	private Vector3 moveDirection = Vector3.zero;
 
-	
+	int framecount = 0;
+	//debug
+	bool console_br = false;
+
 	void Start ()
 	{
 		controller = new Controller();
 	}
-	
+
 	void Update ()
 	{
+		framecount++;
+
 		Frame frame = controller.Frame();
 		if (frame.Hands.Count > 0) {
 			Hand frontHand = frame.Hands.Frontmost;
 			float handX = frontHand.PalmPosition.x;
 			float handY = frontHand.PalmPosition.y;
-			float handZ = frontHand.PalmPosition.z;
-
 			Debug.Log("handX: "+ handX);
 			Debug.Log("handY: "+ handY);
-			Debug.Log("handZ: "+ handZ);
 
-			//handZ 
-			//handX left:200, right:-200 
+			// local
+			float depth = handY;
+			float horizon = handX;
 
-			float moveX = 0;
-			float moveZ = 0;
-
-			if(handX>120){
-				moveZ = 1;
-			} else if(handX<90){
-				moveZ = -1;
-			}
-
-			if(handY<-30){
-				moveX = 1;
-			} else if(handY>30){
-				moveX = -1;
-			}
+			// ranges
+			float MIN_HORIZON = 150;
+			float MAX_HORIZON = -150;
+			float MIN_DEPTH = 150;
+			float MAX_DEPTH = 200;
 
 			GameObject ovr = GameObject.Find("LeapOVRPlayerController");
 			CharacterController characterController = ovr.GetComponent<CharacterController>();
-			Debug.Log("characterController.isGrounded: " + characterController.isGrounded  );
+			// character controller.transform.rotation.y
+			Debug.Log("characterController.transform.rotation.y: " + characterController.transform.rotation.y);
 			if (characterController.isGrounded) {
-				moveDirection = new Vector3(moveX, 0, moveZ);
-				moveDirection = transform.TransformDirection(moveDirection);
-				moveDirection *= speed;
+				Debug.Log("characterController.isGrounded");
+				if (depth > MIN_DEPTH)
+				{
+					Debug.Log("depth > MIN_DEPTH");
+					/*
+					moveDirection = new Vector3(0,1,0);
+					moveDirection = transform.TransformDirection(moveDirection);
+					moveDirection *= speed;
+					*/
 
-				Debug.Log("moveZ: " + moveZ);
-				Debug.Log("moveDirection: " + moveDirection);
-				
+					//Vector3 forward = transform.TransformDirection(Vector3.forward);
+					Vector3 forward = new Vector3(0,0,1);
+					//get camera's quaternion
+					GameObject ovrcameracontroller = GameObject.Find("OVRCameraController");
+					Debug.Log("ovrcameracontroller: "+ovrcameracontroller);
+					Quaternion camRot = ovrcameracontroller.transform.rotation;
+					Quaternion charRot = characterController.transform.rotation;
+
+					Debug.Log("camRot.y: "+camRot.y);
+					Debug.Log("charRot.y: "+charRot.y);
+
+				      //characterController.SimpleMove(direction* 30f);
+				      Debug.Log("Vector3.forward: "+Vector3.forward);
+				      Debug.Log("forward: "+forward);
+				}
+				//Debug.Log("moveDirection: " + moveDirection);
 			}
 			//moveDirection.y -= gravity * Time.deltaTime;
 			//characterController.Move(moveDirection * Time.deltaTime);
