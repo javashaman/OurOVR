@@ -19,10 +19,28 @@ public class LeapHandEventListener : MonoBehaviour {
 		//Quaternion palm_rotation = hand_model.GetPalmRotation();
 		//Vector3 index_tip = hand_model.fingers[1].GetTipPosition();
 
-		Debug.Log ("characterController: "+ characterController);
-		Debug.Log ("palm_position.xex : " + palm_position.x);
-		Debug.Log ("palm_position.y: " + palm_position.y);
-		Debug.Log ("palm_position.z: " + palm_position.z);
+		//Debug.Log ("palm_position.x : " + palm_position.x);
+		//Debug.Log ("ovr.x"+ ovr.position.x);
+		
+		float offset_x = Mathf.Abs ( ovr.position.x - palm_position.x);
+		Debug.Log ("offset.x: "+ offset_x );
+
+
+		//Debug.Log ("palm_position.z: " + palm_position.z);
+		//Debug.Log ("ovr.z: "+ ovr.position.z);
+		
+		float offset_y = Mathf.Abs ( ovr.position.y - palm_position.y);
+		Debug.Log ("offset.y"+ offset_y );
+
+		//float offset_z = Mathf.Abs ( ovr.position.z - palm_position.z);
+		//Debug.Log ("offset.z: "+ offset_z );
+		
+		//X:Depth, range:0.25-0.65
+		//Z:Horizon, range:0.037(L)
+
+
+		//Y:up/down, range: 0.07
+		//X:left/right, range: 0.07
 
 		//float moveX = 0;
 		//float moveZ = 0;
@@ -39,19 +57,19 @@ public class LeapHandEventListener : MonoBehaviour {
 			moveX = -1;
 		}*/
 
-		Debug.Log ("characterController.isGrounded: "+ characterController.isGrounded);
+		//Debug.Log ("characterController.isGrounded: "+ characterController.isGrounded);
 		if (characterController.isGrounded) {
-			moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-			Debug.Log("moveDirection: " + moveDirection);
+			moveDirection = new Vector3(1, 0, Input.GetAxis("Vertical"));
+			//Debug.Log("moveDirection: " + moveDirection);
 			moveDirection = transform.TransformDirection(moveDirection);
 			moveDirection *= speed;
 
-			Debug.Log("moveDirection: " + moveDirection);
+			//Debug.Log("moveDirection: " + moveDirection);
 			
 		}
 		//moveDirection.y -= gravity * Time.deltaTime;
-		Debug.Log("Time.deltaTime: " + Time.deltaTime);
-		Debug.Log("moveDirection * Time.deltaTime: " + moveDirection * Time.deltaTime);
+		//Debug.Log("Time.deltaTime: " + Time.deltaTime);
+		//Debug.Log("moveDirection * Time.deltaTime: " + moveDirection * Time.deltaTime);
 		//characterController.Move(moveDirection * Time.deltaTime);	
 
 	}

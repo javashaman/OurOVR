@@ -5,7 +5,7 @@ using Leap;
 public class HandControllerController : MonoBehaviour {
 	Controller controller;
 
-	public float speed = 0.000000001F;
+	public float speed = 0.0001F;
 	public float gravity = 20.0F;
 	private Vector3 moveDirection = Vector3.zero;
 
@@ -22,9 +22,14 @@ public class HandControllerController : MonoBehaviour {
 			Hand frontHand = frame.Hands.Frontmost;
 			float handX = frontHand.PalmPosition.x;
 			float handY = frontHand.PalmPosition.y;
+			float handZ = frontHand.PalmPosition.z;
 
-			//handX near:70/0, far:250/1
-			//handY left:200, right:-200 
+			Debug.Log("handX: "+ handX);
+			Debug.Log("handY: "+ handY);
+			Debug.Log("handZ: "+ handZ);
+
+			//handZ 
+			//handX left:200, right:-200 
 
 			float moveX = 0;
 			float moveZ = 0;
@@ -41,8 +46,8 @@ public class HandControllerController : MonoBehaviour {
 				moveX = -1;
 			}
 
-
-			CharacterController characterController = GetComponent<CharacterController>();
+			GameObject ovr = GameObject.Find("LeapOVRPlayerController");
+			CharacterController characterController = ovr.GetComponent<CharacterController>();
 			Debug.Log("characterController.isGrounded: " + characterController.isGrounded  );
 			if (characterController.isGrounded) {
 				moveDirection = new Vector3(moveX, 0, moveZ);
