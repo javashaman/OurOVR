@@ -60,20 +60,29 @@ public class HandControllerController : MonoBehaviour {
 					//get camera's quaternion
 					GameObject ovrcameracontroller = GameObject.Find("OVRCameraController");
 					Debug.Log("ovrcameracontroller: "+ovrcameracontroller);
-					Quaternion camRot = ovrcameracontroller.transform.rotation;
+					Quaternion camContRot = ovrcameracontroller.transform.rotation;
+					
+					GameObject camCam = GameObject.Find("OVRCameraController/CameraLeft");
+					Debug.Log("camCam: "+ camCam);
+					Quaternion camCamRot = camCam.transform.rotation;
+
+
 					Quaternion charRot = characterController.transform.rotation;
 
-					Debug.Log("camRot.y: "+camRot.y);
+					Debug.Log("camContRot.y: "+camContRot.y);
 					Debug.Log("charRot.y: "+charRot.y);
+					Debug.Log("camCamRot.y: "+camCamRot.y);
 
 				      //characterController.SimpleMove(direction* 30f);
 				      Debug.Log("Vector3.forward: "+Vector3.forward);
 				      Debug.Log("forward: "+forward);
+
+				      moveDirection = forward;
 				}
 				//Debug.Log("moveDirection: " + moveDirection);
 			}
 			//moveDirection.y -= gravity * Time.deltaTime;
-			//characterController.Move(moveDirection * Time.deltaTime);
+			characterController.Move(moveDirection * Time.deltaTime);
 
 
 		}

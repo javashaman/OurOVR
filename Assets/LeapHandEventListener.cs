@@ -6,11 +6,13 @@ using Leap;
 public class LeapHandEventListener : MonoBehaviour {
 	public Transform ovr;
 
-	public float speed = 2.0F;
-	public float gravity = 20.0F;
+	private float speed = 3.11f;
+	private float critical_pos_x = 0.03f;
 	private Vector3 moveDirection = Vector3.zero;
 
 	void Update() {
+		//X:Depth, range:0.25-0.65
+
 		HandModel hand_model = GetComponent<HandModel>();
 		CharacterController characterController = ovr.GetComponent<CharacterController> ();
 
@@ -19,43 +21,17 @@ public class LeapHandEventListener : MonoBehaviour {
 		//Quaternion palm_rotation = hand_model.GetPalmRotation();
 		//Vector3 index_tip = hand_model.fingers[1].GetTipPosition();
 
-		float offset_x = Mathf.Abs ( ovr.position.x - palm_position.x);
-		Debug.Log ("offset.x: "+ offset_x );
+		Vector3 offset = palm_position - ovr.position;
+		offset.y = 0.0f;
 
-		float critical_pos_x = 0.03f;
+		Debug.Log("palm_position: "+ palm_position);
+		Debug.Log("characterController position: "+ ovr.position);
+		Debug.Log ("offset: "+ offset );
+		Debug.Log ("magnitude: "+ offset.magnitude );
 
-		//X:Depth, range:0.25-0.65
-
-		//float moveX = 0;
-		//float moveZ = 0;
-		
-		/*if(handX>120){
-			moveZ = 1;
-		} else if(handX<90){
-			moveZ = -1;
+		if (characterController.isGrounded && offset.magnitude > critical_pos_x) {
+			Debug.Log("move that thang!");
+			characterController.SimpleMove(offset.normalized * speed);
 		}
-		
-		if(handY<-30){
-			moveX = 1;
-		} else if(handY>30){
-			moveX = -1;
-		}*/
-
-		Debug.Log ("IsGrounded: "+ characterController.isGrounded);
-		Debug.Log ("critical_pos_x:  " + critical_pos_x);
-		Debug.Log ("offset_x:  " + offset_x);
-		if (characterController.isGrounded && offset_x > critical_pos_x) {
-			moveDirection = new Vector3(0, 0, 1);
-			Debug.Log("Inside IF: moveDirection: " + moveDirection);
-			moveDirection = transform.TransformDirection(moveDirection);
-			moveDirection *= speed;
-
-			Debug.Log("Before LEAVING IF: moveDirection*=speed: " + moveDirection);
-		}
-		//moveDirection.y -= gravity * Time.deltaTime;
-		//Debug.Log("Time.deltaTime: " + Time.deltaTime);
-		Debug.Log("moveDirection * Time.deltaTime: " + moveDirection * Time.deltaTime);
-		characterController.Move(moveDirection * Time.deltaTime);	
-
 	}
 }
