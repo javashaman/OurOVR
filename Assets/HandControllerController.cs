@@ -11,7 +11,6 @@ public class HandControllerController : MonoBehaviour {
 
 	int framecount = 0;
 	//debug
-	bool console_br = false;
 
 	void Start ()
 	{
